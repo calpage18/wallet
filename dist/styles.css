@@ -98,7 +98,7 @@ body {
 
 .nav-list-item {
   margin-left: 20px;
-  font-size: 20px;
+  font-size: 16px;
   letter-spacing: 1.6px;
 }
 
@@ -143,6 +143,7 @@ body {
   padding: 0 12px;
   cursor: pointer;
   font-size: 20px;
+  color: #6E6969;
 }
 
 .wallet-name:hover {
