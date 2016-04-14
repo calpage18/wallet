@@ -1,13 +1,12 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// Components
+import Home from './components/home.js';
 
 var App = React.createClass({
   render: function() {
-    return (
-      <div>
-        Good to go dawg!
-      </div>
-    );
+    return <Home />;
   }
 });
 ReactDOM.render(<App />, document.getElementById('app'));

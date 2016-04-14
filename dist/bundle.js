@@ -46,21 +46,31 @@
 
 	'use strict';
 
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(32);
+	var _react = __webpack_require__(1);
 
-	var App = React.createClass({
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _home = __webpack_require__(166);
+
+	var _home2 = _interopRequireDefault(_home);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var App = _react2.default.createClass({
 	  displayName: 'App',
 
 	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      'Good to go dawg!'
-	    );
+	    return _react2.default.createElement(_home2.default, null);
 	  }
 	});
-	ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
+
+	// Components
+
+	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -20016,6 +20026,149 @@
 	var ReactMount = __webpack_require__(156);
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _nav = __webpack_require__(167);
+
+	var _nav2 = _interopRequireDefault(_nav);
+
+	var _wallet = __webpack_require__(168);
+
+	var _wallet2 = _interopRequireDefault(_wallet);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// Components
+	exports.default = _react2.default.createClass({
+	  displayName: 'home',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(_nav2.default, null),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'main' },
+	        _react2.default.createElement(_wallet2.default, null)
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 167 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: "nav",
+	  render: function render() {
+
+	    return _react2.default.createElement(
+	      "header",
+	      { className: "header" },
+	      _react2.default.createElement(
+	        "span",
+	        { className: "logo" },
+	        "Wallet"
+	      ),
+	      _react2.default.createElement(
+	        "nav",
+	        { className: "nav" },
+	        _react2.default.createElement(
+	          "ul",
+	          { className: "nav-list" },
+	          _react2.default.createElement(
+	            "li",
+	            { className: "nav-list-item" },
+	            "Home"
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            { className: "nav-list-item" },
+	            "Reset"
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            { className: "nav-list-item" },
+	            "View Source"
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// Components
+
+	exports.default = _react2.default.createClass({
+	  displayName: "wallet",
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "div",
+	      { className: "wallet-wrapper" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "wallet-name" },
+	        "My wallet"
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "total-row" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "total-label" },
+	          "Balance"
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "total-value" },
+	          "£349.28"
+	        )
+	      )
+	    );
+	  }
+	});
 
 /***/ }
 /******/ ]);

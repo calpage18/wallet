@@ -1,0 +1,173 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* COLOURS
+blue: #156BEE
+green: #60c5ba
+red: #ef5285
+yellow: #feee7d
+*/
+
+body {
+  background-color: #f6f7f9;
+  font-family: 'Oswald', sans-serif;
+}
+
+
+/*******************
+****** HEADER ******
+*******************/
+
+.header {
+  display: flex;
+  align-items: center;
+  background-color: #2196F3;
+  padding: 0 30px;
+  justify-content: space-between;
+  height: 60px;
+  color: white;
+  box-shadow: 0 0 4px rgba(0,0,0,.4);
+  font-family: 'Oswald', sans-serif;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.logo {
+  text-transform: lowercase;
+  font-size: 32px;
+  letter-spacing: 2px;
+}
+
+.nav {
+
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-list-item {
+  margin-left: 20px;
+  font-size: 20px;
+  letter-spacing: 1.6px;
+}
+
+.nav-list-item:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/*****************
+****** MAIN ******
+*****************/
+
+.main {
+  padding: 90px 30px 30px;
+  min-height: 100vh;
+  display: flex;
+}
+
+/***************************
+****** WALLET WRAPPER ******
+***************************/
+
+.wallet-wrapper {
+  background-color: white;
+  width: 100%;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+/************************
+****** WALLET NAME ******
+************************/
+
+.wallet-name {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.08),0 1px 5px 0 rgba(0,0,0,0.04);
+  margin-bottom: 30px;
+  padding: 0 12px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.wallet-name:hover {
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.08);
+}
+
+/******************
+****** TOTAL ******
+******************/
+
+.total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #2196F3;
+  font-size: 26px;
+  font-family: 'Oswald', sans-serif;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #2196F3;
+}
+
+.total-value {
+  color: #43a047;
+}
+
+.total-value--zero {
+  color: #999999;
+}
