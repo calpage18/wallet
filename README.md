@@ -1,6 +1,6 @@
 # wallet
 
-* You can find this project at calumspage.com/wallet
+* You can find this project running [here](http://calumspage.com/wallet)
 
 * If you want to build it locally, clone the repo and run
 
