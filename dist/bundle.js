@@ -20141,27 +20141,59 @@
 
 	var _transactions2 = _interopRequireDefault(_transactions);
 
+	var _totalRow = __webpack_require__(272);
+
+	var _totalRow2 = _interopRequireDefault(_totalRow);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// Components
 	exports.default = _react2.default.createClass({
 	  displayName: 'wallet',
 	  getInitialState: function getInitialState() {
 	    return {
-	      transactions: [{
-	        transactionDate: 1460701451271,
-	        transactionType: 'deposit',
-	        transactionValue: 32045,
-	        remainingBalance: 32045
-	      }, {
-	        transactionDate: 1460700584456,
-	        transactionType: 'withdrawal',
-	        transactionValue: 345,
-	        remainingBalance: 32485
-	      }],
-	      transactionDisplayType: 'all'
+	      transactions: [],
+	      transactionDisplayType: 'all',
+	      totalBalance: 0
 	    };
 	  },
+	  addNewTransaction: function addNewTransaction(transactionData) {
+
+	    // Adjust the total balance as required
+	    var newTotal;
+	    if (transactionData.transactionType === 'deposit') {
+	      newTotal = this.state.totalBalance + transactionData.transactionValue;
+	    } else {
+	      newTotal = this.state.totalBalance - transactionData.transactionValue;
+	    }
+
+	    // Initialise newTransactionsList to existing transactions array so we can push on the new transaction
+	    var newTransactionsList = this.state.transactions;
+	    newTransactionsList.push(transactionData);
+
+	    // Update the transactions array and totalBalance
+	    this.setState({
+	      transactions: newTransactionsList,
+	      totalBalance: newTotal
+	    });
+	  },
 	  render: function render() {
+
+	    // REMOVE AFTER TESTING FUNCTION
+	    var newDepositData = {
+	      transactionDate: Date.now(),
+	      transactionType: 'deposit',
+	      transactionValue: 32045,
+	      remainingBalance: this.state.totalBalance + 32045
+	    };
+
+	    var newWithdrawalData = {
+	      transactionDate: Date.now(),
+	      transactionType: 'withdrawal',
+	      transactionValue: 21045,
+	      remainingBalance: this.state.totalBalance - 21045
+	    };
+
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'wallet-wrapper' },
@@ -20175,20 +20207,7 @@
 	        ),
 	        _react2.default.createElement('i', { className: 'fa fa-pencil wallet-name-edit-button', 'aria-hidden': 'true' })
 	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'total-row' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'total-label' },
-	          'Balance'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'total-value' },
-	          '£349.28'
-	        )
-	      ),
+	      _react2.default.createElement(_totalRow2.default, { totalBalance: this.state.totalBalance }),
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'tabs' },
@@ -20208,12 +20227,20 @@
 	          'Withdrawals'
 	        )
 	      ),
-	      _react2.default.createElement(_transactions2.default, { transactions: this.state.transactions, transactionDisplayType: this.state.transactionDisplayType })
+	      _react2.default.createElement(_transactions2.default, { transactions: this.state.transactions, transactionDisplayType: this.state.transactionDisplayType }),
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: this.addNewTransaction.bind(this, newDepositData) },
+	        'Deposit'
+	      ),
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: this.addNewTransaction.bind(this, newWithdrawalData) },
+	        'Withdraw'
+	      )
 	    );
 	  }
 	});
-
-	// Components
 
 /***/ },
 /* 169 */
@@ -21846,25 +21873,14 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _helpers = __webpack_require__(273);
 
-	// Components
+	var _helpers2 = _interopRequireDefault(_helpers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = _react2.default.createClass({
 	  displayName: 'transactionRow',
-	  getTransactionDate: function getTransactionDate() {
-	    var transactionDate = (0, _moment2.default)(this.props.transactionDate).format('DD/MM/YYYY');
-	    var transactionTime = (0, _moment2.default)(this.props.transactionDate).format('HH:mm');
-	    return transactionDate + ' -  ' + transactionTime;
-	  },
-	  getTransactionValue: function getTransactionValue() {
-	    var transactionValue = (parseInt(this.props.transactionValue) / 100).toFixed(2);
-	    return transactionValue;
-	  },
-	  getRemainingBalance: function getRemainingBalance() {
-	    var remainingBalance = (parseInt(this.props.remainingBalance) / 100).toFixed(2);
-	    return remainingBalance;
-	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
@@ -21875,7 +21891,7 @@
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'transaction-date' },
-	          this.getTransactionDate()
+	          _helpers2.default.getFormattedDate(this.props.transactionDate)
 	        ),
 	        this.props.transactionDisplayType === 'all' ? _react2.default.createElement(
 	          'span',
@@ -21889,14 +21905,12 @@
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'transaction-amount' },
-	          '£',
-	          this.getTransactionValue()
+	          _helpers2.default.getFormattedCurrency(this.props.transactionValue)
 	        ),
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'new-total' },
-	          '£',
-	          this.getRemainingBalance()
+	          _helpers2.default.getFormattedCurrency(this.props.remainingBalance)
 	        )
 	      )
 	    );
@@ -35005,6 +35019,89 @@
 	    return zh_tw;
 
 	}));
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _helpers = __webpack_require__(273);
+
+	var _helpers2 = _interopRequireDefault(_helpers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'totalRow',
+	  getClassName: function getClassName() {
+	    if (this.props.totalBalance === 0) {
+	      return 'total-value--zero';
+	    } else if (this.props.totalBalance >= 100000000) {
+	      return 'total-value--million';
+	    } else {
+	      return 'total-value';
+	    }
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'total-row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'total-label' },
+	        'Balance'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: this.getClassName() },
+	        _helpers2.default.getFormattedCurrency(this.props.totalBalance)
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _moment = __webpack_require__(172);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+
+	  // Pass in value in pence. Assume default of en-GB & GBP
+
+	  getFormattedCurrency: function getFormattedCurrency(value) {
+	    var locale = arguments.length <= 1 || arguments[1] === undefined ? 'en-GB' : arguments[1];
+	    var currency = arguments.length <= 2 || arguments[2] === undefined ? 'GBP' : arguments[2];
+
+	    var formattedValue = (value / 100).toLocaleString(locale, { style: 'currency', currency: currency });
+	    return formattedValue;
+	  },
+	  getFormattedDate: function getFormattedDate(date) {
+	    var transactionDate = (0, _moment2.default)(date).format('DD/MM/YYYY');
+	    var transactionTime = (0, _moment2.default)(date).format('HH:mm');
+	    return transactionDate + ' -  ' + transactionTime;
+	  }
+	};
 
 /***/ }
 /******/ ]);

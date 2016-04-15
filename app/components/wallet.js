@@ -2,30 +2,56 @@ import React from 'react';
 
 // Components
 import Transactions from './transactions.js';
+import TotalRow from './totalRow.js';
 
 export default React.createClass({
 
   getInitialState(){
     return({
-      transactions: [
-        {
-          transactionDate: 1460701451271,
-          transactionType: 'deposit',
-          transactionValue: 32045,
-          remainingBalance: 32045,
-        },
-        {
-          transactionDate: 1460700584456,
-          transactionType: 'withdrawal',
-          transactionValue: 345,
-          remainingBalance: 32485,
-        }
-      ],
-      transactionDisplayType: 'all'
+      transactions: [],
+      transactionDisplayType: 'all',
+      totalBalance: 0
     })
   },
 
+  addNewTransaction(transactionData){
+
+    // Adjust the total balance as required
+    var newTotal;
+    if(transactionData.transactionType === 'deposit'){
+      newTotal = this.state.totalBalance + transactionData.transactionValue;
+    } else{
+      newTotal = this.state.totalBalance - transactionData.transactionValue;
+    }
+
+    // Initialise newTransactionsList to existing transactions array so we can push on the new transaction
+    var newTransactionsList = this.state.transactions;
+    newTransactionsList.push(transactionData);
+
+    // Update the transactions array and totalBalance
+    this.setState({
+      transactions: newTransactionsList,
+      totalBalance: newTotal
+    });
+  },
+
   render(){
+
+    // REMOVE AFTER TESTING FUNCTION
+    var newDepositData = {
+      transactionDate: Date.now(),
+      transactionType: 'deposit',
+      transactionValue: 32045,
+      remainingBalance: this.state.totalBalance + 32045
+    };
+
+    var newWithdrawalData = {
+      transactionDate: Date.now(),
+      transactionType: 'withdrawal',
+      transactionValue: 21045,
+      remainingBalance: this.state.totalBalance - 21045
+    };
+
     return(
       <div className="wallet-wrapper">
 
@@ -36,10 +62,7 @@ export default React.createClass({
         </div>
 
         {/*Component - <TotalRow />*/}
-        <div className="total-row">
-          <div className="total-label">Balance</div>
-          <div className="total-value">£349.28</div>
-        </div>
+        <TotalRow totalBalance={this.state.totalBalance} />
 
         {/*Component - <Tabs />*/}
         <div className="tabs">
@@ -50,6 +73,8 @@ export default React.createClass({
 
         {/*Component - <Transactions />*/}
         <Transactions transactions={this.state.transactions} transactionDisplayType={this.state.transactionDisplayType} />
+        <button onClick={this.addNewTransaction.bind(this,newDepositData)}>Deposit</button>
+        <button onClick={this.addNewTransaction.bind(this, newWithdrawalData)}>Withdraw</button>
       </div>
     )
   }

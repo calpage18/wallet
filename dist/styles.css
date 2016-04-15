@@ -184,6 +184,18 @@ body {
   color: #999999;
 }
 
+.total-value--million {
+  animation: font-color-change 2s infinite;
+}
+
+@keyframes font-color-change {
+    0% { color: #feee7d; }
+    33% { color: #60c5ba; }
+    50% { transform: scale(1.2);}
+    66% { color: #ef5285; }
+    100% { color: #a5dff9; transform: scale(1); }
+}
+
 
 /*****************
 ****** TABS ******
@@ -219,6 +231,10 @@ body {
 
 .transaction-date {
   margin-right: 20px;
+}
+
+.transaction-type {
+  text-transform: capitalize;
 }
 
 .new-total {
