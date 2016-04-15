@@ -34991,7 +34991,9 @@
 	  },
 	  handleNewTransaction: function handleNewTransaction(type) {
 	    // Get the value entered
-	    if (type === 'withdrawal' && this.props.currentTotal - this.state.transactionValue < 0) {
+
+	    debugger;
+	    if (type === 'withdrawal' && this.props.currentTotal - this.state.transactionValue * 100 < 0) {
 	      alert("Sorry, you can't have a negative balance");
 	    } else {
 
