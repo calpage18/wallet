@@ -54,9 +54,9 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _home = __webpack_require__(166);
+	var _main = __webpack_require__(276);
 
-	var _home2 = _interopRequireDefault(_home);
+	var _main2 = _interopRequireDefault(_main);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -64,7 +64,7 @@
 	  displayName: 'App',
 
 	  render: function render() {
-	    return _react2.default.createElement(_home2.default, null);
+	    return _react2.default.createElement(_main2.default, null);
 	  }
 	});
 
@@ -20028,47 +20028,7 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _nav = __webpack_require__(167);
-
-	var _nav2 = _interopRequireDefault(_nav);
-
-	var _wallet = __webpack_require__(168);
-
-	var _wallet2 = _interopRequireDefault(_wallet);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// Components
-	exports.default = _react2.default.createClass({
-	  displayName: 'home',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(_nav2.default, null),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'main' },
-	        _react2.default.createElement(_wallet2.default, null)
-	      )
-	    );
-	  }
-	});
-
-/***/ },
+/* 166 */,
 /* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -20086,6 +20046,12 @@
 
 	exports.default = _react2.default.createClass({
 	  displayName: "nav",
+	  resetHandler: function resetHandler() {
+	    this.props.resetWallet();
+	  },
+	  homeHandler: function homeHandler() {
+	    this.props.goHome();
+	  },
 	  render: function render() {
 
 	    return _react2.default.createElement(
@@ -20104,12 +20070,12 @@
 	          { className: "nav-list" },
 	          _react2.default.createElement(
 	            "li",
-	            { className: "nav-list-item" },
+	            { className: "nav-list-item", onClick: this.homeHandler },
 	            "Home"
 	          ),
 	          _react2.default.createElement(
 	            "li",
-	            { className: "nav-list-item" },
+	            { className: "nav-list-item", onClick: this.resetHandler },
 	            "Reset"
 	          ),
 	          _react2.default.createElement(
@@ -20117,7 +20083,7 @@
 	            { className: "nav-list-item" },
 	            _react2.default.createElement(
 	              "a",
-	              { "class": "nav-link", href: "https://github.com/calumspage/wallet" },
+	              { "class": "nav-link", href: "https://github.com/calumspage/wallet", target: "_blank" },
 	              "View Source"
 	            )
 	          )
@@ -20131,18 +20097,22 @@
 	          { className: "nav-list" },
 	          _react2.default.createElement(
 	            "li",
-	            { className: "nav-list-item" },
+	            { className: "nav-list-item", onClick: this.homeHandler },
 	            _react2.default.createElement("i", { className: "fa fa-home", "aria-hidden": "true" })
 	          ),
 	          _react2.default.createElement(
 	            "li",
-	            { className: "nav-list-item" },
+	            { className: "nav-list-item", onClick: this.resetHandler },
 	            _react2.default.createElement("i", { className: "fa fa-refresh", "aria-hidden": "true" })
 	          ),
 	          _react2.default.createElement(
 	            "li",
 	            { className: "nav-list-item" },
-	            _react2.default.createElement("i", { className: "fa fa-github", "aria-hidden": "true" })
+	            _react2.default.createElement(
+	              "a",
+	              { "class": "nav-link", href: "https://github.com/calumspage/wallet", target: "_blank" },
+	              _react2.default.createElement("i", { className: "fa fa-github", "aria-hidden": "true" })
+	            )
 	          )
 	        )
 	      )
@@ -20151,109 +20121,7 @@
 	});
 
 /***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _transactions = __webpack_require__(169);
-
-	var _transactions2 = _interopRequireDefault(_transactions);
-
-	var _transactionControl = __webpack_require__(273);
-
-	var _transactionControl2 = _interopRequireDefault(_transactionControl);
-
-	var _totalRow = __webpack_require__(274);
-
-	var _totalRow2 = _interopRequireDefault(_totalRow);
-
-	var _tabs = __webpack_require__(275);
-
-	var _tabs2 = _interopRequireDefault(_tabs);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// Components
-	exports.default = _react2.default.createClass({
-	  displayName: 'wallet',
-	  getInitialState: function getInitialState() {
-	    return {
-	      transactions: [],
-	      transactionDisplayType: 'all',
-	      totalBalance: 0
-	    };
-	  },
-	  addNewTransaction: function addNewTransaction(transactionData) {
-
-	    // Adjust the total balance as required
-	    var newTotal = 0;
-	    if (transactionData.transactionType === 'deposit') {
-	      newTotal = this.state.totalBalance + transactionData.transactionValue;
-	    } else {
-	      newTotal = this.state.totalBalance - transactionData.transactionValue;
-	    }
-
-	    // Add this new total to the transactionData object
-	    transactionData.remainingBalance = newTotal;
-
-	    // Initialise newTransactionsList to existing transactions array so we can push on the new transaction
-	    var newTransactionsList = this.state.transactions;
-	    newTransactionsList.push(transactionData);
-
-	    // Update the transactions array and totalBalance
-	    this.setState({
-	      transactions: newTransactionsList,
-	      totalBalance: newTotal
-	    });
-
-	    // Save this data to localStorage. Using these properties instead of state because setState might not have finished executing
-	    window.localStorage.setItem('wallet-state', JSON.stringify({
-	      transactions: newTransactionsList,
-	      totalBalance: newTotal
-	    }));
-	  },
-
-
-	  // Change the transactions displayed when clicking on a tab
-	  changeTransactionDisplayType: function changeTransactionDisplayType(type) {
-	    if (type != this.state.transactionDisplayType) {
-	      this.setState({
-	        transactionDisplayType: type
-	      });
-	    }
-	  },
-
-
-	  // Check if wallet data exists in localStorage and load it if it does.
-	  componentWillMount: function componentWillMount() {
-	    if (window.localStorage.getItem('wallet-state')) {
-	      var dataFromLocalStorage = JSON.parse(window.localStorage.getItem('wallet-state'));
-	      this.setState(dataFromLocalStorage);
-	    }
-	  },
-	  render: function render() {
-
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'wallet-wrapper' },
-	      _react2.default.createElement(_transactionControl2.default, { addNewTransaction: this.addNewTransaction, currentTotal: this.state.totalBalance }),
-	      _react2.default.createElement(_tabs2.default, { activeTab: this.state.transactionDisplayType, changeTransactionDisplayType: this.changeTransactionDisplayType }),
-	      _react2.default.createElement(_transactions2.default, { transactions: this.state.transactions, transactionDisplayType: this.state.transactionDisplayType }),
-	      _react2.default.createElement(_totalRow2.default, { totalBalance: this.state.totalBalance })
-	    );
-	  }
-	});
-
-/***/ },
+/* 168 */,
 /* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -20302,8 +20170,7 @@
 	          return _react2.default.createElement(_transactionRow2.default, { transactionDate: row.transactionDate,
 	            transactionType: row.transactionType,
 	            transactionValue: row.transactionValue,
-	            transactionDisplayType: _this.props.transactionDisplayType,
-	            remainingBalance: row.remainingBalance });
+	            transactionDisplayType: _this.props.transactionDisplayType });
 	        }
 	      });
 	      return rows;
@@ -21901,9 +21768,18 @@
 	exports.default = _react2.default.createClass({
 	  displayName: 'transactionRow',
 	  render: function render() {
+
+	    var style;
+
+	    if (this.props.transactionType === 'deposit') {
+	      style = { color: '#62BF66' };
+	    } else {
+	      style = { color: '#FF5854' };
+	    }
+
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'transaction-row' },
+	      { className: 'transaction-row', style: style },
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'transaction-info' },
@@ -21925,11 +21801,6 @@
 	          'span',
 	          { className: 'transaction-amount' },
 	          _helpers2.default.getFormattedCurrency(this.props.transactionValue)
-	        ),
-	        _react2.default.createElement(
-	          'span',
-	          { className: 'new-total' },
-	          _helpers2.default.getFormattedCurrency(this.props.remainingBalance)
 	        )
 	      )
 	    );
@@ -35057,14 +34928,13 @@
 
 	exports.default = {
 
-	  // Pass in value in pence. Assume default of en-GB & GBP
+	  // Pass in value in pence. Assume default of en-GB
 
 	  getFormattedCurrency: function getFormattedCurrency(value) {
 	    var locale = arguments.length <= 1 || arguments[1] === undefined ? 'en-GB' : arguments[1];
-	    var currency = arguments.length <= 2 || arguments[2] === undefined ? 'GBP' : arguments[2];
 
-	    var formattedValue = (value / 100).toLocaleString(locale, { style: 'currency', currency: currency });
-	    return formattedValue;
+	    var formattedValue = (value / 100).toFixed(2).toLocaleString(locale);
+	    return '£' + formattedValue;
 	  },
 	  getFormattedDate: function getFormattedDate(date) {
 	    var transactionDate = (0, _moment2.default)(date).format('DD/MM/YYYY');
@@ -35121,7 +34991,7 @@
 	  },
 	  handleNewTransaction: function handleNewTransaction(type) {
 	    // Get the value entered
-	    if (type === 'withdraw' && this.props.currentTotal - this.state.transactionValue < 0) {
+	    if (type === 'withdrawal' && this.props.currentTotal - this.state.transactionValue < 0) {
 	      alert("Sorry, you can't have a negative balance");
 	    } else {
 
@@ -35156,7 +35026,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'transaction-button transaction-button--withdraw', disabled: this.state.transactionValue === 0, onClick: this.handleNewTransaction.bind(this, 'withdraw') },
+	          { className: 'transaction-button transaction-button--withdraw', disabled: this.state.transactionValue === 0, onClick: this.handleNewTransaction.bind(this, 'withdrawal') },
 	          'Withdraw'
 	        )
 	      )
@@ -35259,6 +35129,142 @@
 	    );
 	  }
 	});
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _nav = __webpack_require__(167);
+
+	var _nav2 = _interopRequireDefault(_nav);
+
+	var _transactions = __webpack_require__(169);
+
+	var _transactions2 = _interopRequireDefault(_transactions);
+
+	var _transactionControl = __webpack_require__(273);
+
+	var _transactionControl2 = _interopRequireDefault(_transactionControl);
+
+	var _totalRow = __webpack_require__(274);
+
+	var _totalRow2 = _interopRequireDefault(_totalRow);
+
+	var _tabs = __webpack_require__(275);
+
+	var _tabs2 = _interopRequireDefault(_tabs);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'main',
+	  getInitialState: function getInitialState() {
+	    return {
+	      transactions: [],
+	      transactionDisplayType: 'all',
+	      totalBalance: 0
+	    };
+	  },
+	  addNewTransaction: function addNewTransaction(transactionData) {
+
+	    // Adjust the total balance as required
+	    var newTotal = 0;
+	    if (transactionData.transactionType === 'deposit') {
+	      newTotal = this.state.totalBalance + transactionData.transactionValue;
+	    } else {
+	      newTotal = this.state.totalBalance - transactionData.transactionValue;
+	    }
+
+	    // Add this new total to the transactionData object
+	    transactionData.remainingBalance = newTotal;
+
+	    // Initialise newTransactionsList to existing transactions array so we can push on the new transaction
+	    var newTransactionsList = this.state.transactions;
+	    newTransactionsList.push(transactionData);
+
+	    // Update the transactions array and totalBalance
+	    this.setState({
+	      transactions: newTransactionsList,
+	      totalBalance: newTotal
+	    });
+
+	    // Save this data to localStorage. Using these properties instead of state because setState might not have finished executing
+	    window.localStorage.setItem('wallet-state', JSON.stringify({
+	      transactions: newTransactionsList,
+	      totalBalance: newTotal
+	    }));
+	  },
+
+
+	  // Change the transactions displayed when clicking on a tab
+	  changeTransactionDisplayType: function changeTransactionDisplayType(type) {
+	    if (type != this.state.transactionDisplayType) {
+	      this.setState({
+	        transactionDisplayType: type
+	      });
+	    }
+	  },
+
+
+	  //Reset wallet from nav bar
+	  resetWallet: function resetWallet() {
+	    this.setState({
+	      transactions: [],
+	      transactionDisplayType: 'all',
+	      totalBalance: 0
+	    });
+	    window.localStorage.setItem('wallet-state', {});
+	  },
+
+
+	  // No real concept of 'home' in this app, so just set transactions display to 'all'
+	  goHome: function goHome() {
+	    this.setState({
+	      transactionDisplayType: 'all'
+	    });
+	  },
+
+
+	  // Check if wallet data exists in localStorage and load it if it does.
+	  componentWillMount: function componentWillMount() {
+	    if (window.localStorage.getItem('wallet-state')) {
+	      var dataFromLocalStorage = JSON.parse(window.localStorage.getItem('wallet-state'));
+	      this.setState(dataFromLocalStorage);
+	    }
+	  },
+	  render: function render() {
+
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(_nav2.default, { resetWallet: this.resetWallet, goHome: this.goHome }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'main' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'wallet-wrapper' },
+	          _react2.default.createElement(_transactionControl2.default, { addNewTransaction: this.addNewTransaction, currentTotal: this.state.totalBalance }),
+	          _react2.default.createElement(_tabs2.default, { activeTab: this.state.transactionDisplayType, changeTransactionDisplayType: this.changeTransactionDisplayType }),
+	          _react2.default.createElement(_transactions2.default, { transactions: this.state.transactions, transactionDisplayType: this.state.transactionDisplayType }),
+	          _react2.default.createElement(_totalRow2.default, { totalBalance: this.state.totalBalance })
+	        )
+	      )
+	    );
+	  }
+	});
+
+	// Components
 
 /***/ }
 /******/ ]);

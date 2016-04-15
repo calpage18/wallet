@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Components
-import Home from './components/home.js';
+import Main from './components/main.js';
 
 var App = React.createClass({
   render: function() {
-    return <Home />;
+    return <Main />;
   }
 });
 ReactDOM.render(<App />, document.getElementById('app'));

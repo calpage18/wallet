@@ -25,8 +25,7 @@ export default React.createClass({
             <TransactionRow transactionDate={row.transactionDate}
               transactionType={row.transactionType}
               transactionValue={row.transactionValue}
-              transactionDisplayType={this.props.transactionDisplayType}
-              remainingBalance={row.remainingBalance} />
+              transactionDisplayType={this.props.transactionDisplayType} />
           )
         }
       });

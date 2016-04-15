@@ -1,6 +1,7 @@
 import React from 'react';
 
 // Components
+import Nav from './nav.js';
 import Transactions from './transactions.js';
 import TransactionControl from './transactionControl.js';
 import TotalRow from './totalRow.js';
@@ -56,6 +57,23 @@ export default React.createClass({
     }
   },
 
+  //Reset wallet from nav bar
+  resetWallet(){
+    this.setState({
+      transactions: [],
+      transactionDisplayType: 'all',
+      totalBalance: 0
+    });
+    window.localStorage.setItem('wallet-state', {});
+  },
+
+  // No real concept of 'home' in this app, so just set transactions display to 'all'
+  goHome(){
+    this.setState({
+      transactionDisplayType: 'all'
+    })
+  },
+
 
   // Check if wallet data exists in localStorage and load it if it does.
   componentWillMount(){
@@ -68,14 +86,21 @@ export default React.createClass({
   render(){
 
     return(
-      <div className="wallet-wrapper">
 
-        <TransactionControl addNewTransaction={this.addNewTransaction} currentTotal={this.state.totalBalance}/>
-        <Tabs activeTab={this.state.transactionDisplayType} changeTransactionDisplayType={this.changeTransactionDisplayType} />
-        <Transactions transactions={this.state.transactions} transactionDisplayType={this.state.transactionDisplayType} />
-        <TotalRow totalBalance={this.state.totalBalance} />
+      <div>
+        <Nav resetWallet={this.resetWallet} goHome={this.goHome}/>
+        <div className="main">
+          <div className="wallet-wrapper">
 
+            <TransactionControl addNewTransaction={this.addNewTransaction} currentTotal={this.state.totalBalance}/>
+            <Tabs activeTab={this.state.transactionDisplayType} changeTransactionDisplayType={this.changeTransactionDisplayType} />
+            <Transactions transactions={this.state.transactions} transactionDisplayType={this.state.transactionDisplayType} />
+            <TotalRow totalBalance={this.state.totalBalance} />
+
+          </div>
+        </div>
       </div>
+
     )
   }
 });

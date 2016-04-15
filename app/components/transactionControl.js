@@ -32,7 +32,7 @@ export default React.createClass({
 
   handleNewTransaction(type){
     // Get the value entered
-    if(type === 'withdraw' && this.props.currentTotal - (this.state.transactionValue) < 0) {
+    if(type === 'withdrawal' && this.props.currentTotal - (this.state.transactionValue) < 0) {
       alert("Sorry, you can't have a negative balance");
     } else {
 
@@ -57,7 +57,7 @@ export default React.createClass({
         </div>
         <div className="transaction-buttons">
           <button className="transaction-button transaction-button--deposit" disabled={this.state.transactionValue === 0} onClick={this.handleNewTransaction.bind(this,'deposit')}>Deposit</button>
-          <button className="transaction-button transaction-button--withdraw" disabled={this.state.transactionValue === 0} onClick={this.handleNewTransaction.bind(this,'withdraw')}>Withdraw</button>
+          <button className="transaction-button transaction-button--withdraw" disabled={this.state.transactionValue === 0} onClick={this.handleNewTransaction.bind(this,'withdrawal')}>Withdraw</button>
         </div>
       </div>
     )

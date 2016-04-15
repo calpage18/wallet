@@ -111,6 +111,10 @@ body {
   color: white;
 }
 
+.nav-list-item i {
+  font-size: 22px;
+}
+
 .nav-list-item:hover {
   transform: scale(1.1);
   cursor: pointer;
@@ -339,14 +343,85 @@ body {
   text-transform: uppercase;
 }
 
-.new-total {
-  margin-left: 20px;
-}
-
 .empty-transactions {
   padding: 20px;
   background-color: #f6f7f9;
   border-radius: 5px;
   margin: 10px 0 20px;
   color: #6E6969;
+}
+
+
+
+
+
+@media only screen and (max-width : 768px) {
+
+  .nav {
+    display: none;
+  }
+
+  .nav-small {
+    display: flex;
+  }
+
+  .transaction-control {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .transaction-input-wrapper {
+    flex: 0 0 auto;
+    display: flex;
+  }
+
+  .transaction-buttons {
+    flex: 0 0 auto;
+    margin-top: 15px;
+  }
+
+  .transaction-button {
+    height: 40px;
+  }
+
+  .transaction-button:first-of-type {
+    margin-left: 0;
+    margin-right: 5px;
+  }
+
+  .transaction-button:last-of-type {
+    margin-left: 5px;
+  }
+}
+
+@media only screen and (max-width : 620px) {
+
+  .header {
+    height: 40px;
+    padding: 0 15px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .nav-list-item i {
+    font-size: 20px;
+  }
+
+  .main {
+    padding: 40px 0 0;
+  }
+
+  .wallet-wrapper {
+    padding: 20px;
+  }
+
+  .transaction-type {
+    display: none;
+  }
+
+  .total-row {
+    font-size: 20px;
+  }
 }

@@ -2,10 +2,10 @@ import moment from 'moment';
 
 export default {
 
-  // Pass in value in pence. Assume default of en-GB & GBP
-  getFormattedCurrency(value, locale = 'en-GB', currency = 'GBP'){
-    var formattedValue = (value / 100).toLocaleString(locale, {style: 'currency', currency: currency});
-    return formattedValue;
+  // Pass in value in pence. Assume default of en-GB
+  getFormattedCurrency(value, locale = 'en-GB'){
+    var formattedValue = ((value / 100).toFixed(2)).toLocaleString(locale);
+    return `£${formattedValue}`;
   },
 
   getFormattedDate(date){
