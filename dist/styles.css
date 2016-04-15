@@ -65,11 +65,20 @@ body {
 *******************/
 
 .header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   background-color: #2196F3;
   padding: 0 30px;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   height: 60px;
   color: white;
   box-shadow: 0 0 4px rgba(0,0,0,.4);
@@ -87,6 +96,9 @@ body {
 }
 
 .nav {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -96,8 +108,14 @@ body {
 
 .nav-list {
   list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .nav-list-item {
@@ -116,7 +134,8 @@ body {
 }
 
 .nav-list-item:hover {
-  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
   cursor: pointer;
 }
 
@@ -127,6 +146,9 @@ body {
 .main {
   padding: 90px 30px 30px;
   min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -139,8 +161,15 @@ body {
   width: 100%;
   border: 1px solid rgba(0,0,0,0.1);
   padding: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 /************************
@@ -149,8 +178,14 @@ body {
 
 .wallet-name {
   height: 50px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   /*box-shadow: 0 1px 3px 0 rgba(0,0,0,0.08),0 1px 5px 0 rgba(0,0,0,0.04);*/
   margin-bottom: 30px;
   /*padding: 0 12px;*/
@@ -170,7 +205,8 @@ body {
 
 .wallet-name:hover .fa.wallet-name-edit-button {
   opacity: 1;
-  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 
 /******************
@@ -178,9 +214,18 @@ body {
 ******************/
 
 .total-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   color: #2196F3;
   font-size: 26px;
   font-family: 'Oswald', sans-serif;
@@ -199,15 +244,24 @@ body {
 }
 
 .total-value--million {
-  animation: font-color-change 2s infinite;
+  -webkit-animation: font-color-change 2s infinite;
+          animation: font-color-change 2s infinite;
+}
+
+@-webkit-keyframes font-color-change {
+  0% { color: #feee7d; }
+  33% { color: #60c5ba; }
+  50% { -webkit-transform: scale(1.2); transform: scale(1.2);}
+  66% { color: #ef5285; }
+  100% { color: #a5dff9; -webkit-transform: scale(1); transform: scale(1); }
 }
 
 @keyframes font-color-change {
   0% { color: #feee7d; }
   33% { color: #60c5ba; }
-  50% { transform: scale(1.2);}
+  50% { -webkit-transform: scale(1.2); transform: scale(1.2);}
   66% { color: #ef5285; }
-  100% { color: #a5dff9; transform: scale(1); }
+  100% { color: #a5dff9; -webkit-transform: scale(1); transform: scale(1); }
 }
 
 /********************************
@@ -215,14 +269,23 @@ body {
 ********************************/
 
 .transaction-control {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: stretch;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
   height: 42px;
 }
 
 .transaction-input-wrapper {
   position: relative;
-  flex: 2 2 0px;
+  -webkit-box-flex: 2;
+  -webkit-flex: 2 2 0px;
+      -ms-flex: 2 2 0px;
+          flex: 2 2 0px;
 }
 
 .transaction-input-wrapper:before {
@@ -253,13 +316,25 @@ body {
 }
 
 .transaction-buttons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: stretch;
-  flex: 1 1 0px;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 0px;
+      -ms-flex: 1 1 0px;
+          flex: 1 1 0px;
 }
 
 .transaction-button {
-  flex: 1 1 0px;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 0px;
+      -ms-flex: 1 1 0px;
+          flex: 1 1 0px;
   border: none;
   margin-left: 10px;
   border-radius: 3px;
@@ -289,8 +364,14 @@ body {
 *****************/
 
 .tabs {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 50px;
   margin-top: 15px;
 }
@@ -300,6 +381,7 @@ body {
   padding: 0 5px 5px;
   border-bottom: 3px solid transparent;
   cursor: pointer;
+  -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
@@ -318,15 +400,34 @@ body {
 *************************/
 
 .transactions {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .transaction-row {
-  flex: 0 0 40px;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 40px;
+      -ms-flex: 0 0 40px;
+          flex: 0 0 40px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 0 10px;
   border-radius: 5px;
 }
@@ -362,21 +463,37 @@ body {
   }
 
   .nav-small {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
   }
 
   .transaction-control {
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
     height: auto;
   }
 
   .transaction-input-wrapper {
-    flex: 0 0 auto;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
   }
 
   .transaction-buttons {
-    flex: 0 0 auto;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
     margin-top: 15px;
   }
 
