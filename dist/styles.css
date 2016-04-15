@@ -171,8 +171,8 @@ body {
   color: #2196F3;
   font-size: 26px;
   font-family: 'Oswald', sans-serif;
-  padding-bottom: 10px;
-  border-bottom: 3px solid #2196F3;
+  padding-top: 10px;
+  border-top: 3px solid #2196F3;
 }
 
 .total-value {
@@ -189,11 +189,78 @@ body {
 }
 
 @keyframes font-color-change {
-    0% { color: #feee7d; }
-    33% { color: #60c5ba; }
-    50% { transform: scale(1.2);}
-    66% { color: #ef5285; }
-    100% { color: #a5dff9; transform: scale(1); }
+  0% { color: #feee7d; }
+  33% { color: #60c5ba; }
+  50% { transform: scale(1.2);}
+  66% { color: #ef5285; }
+  100% { color: #a5dff9; transform: scale(1); }
+}
+
+/********************************
+****** TRANSACTION CONTROL ******
+********************************/
+
+.transaction-control {
+  display: flex;
+  align-items: stretch;
+  height: 42px;
+}
+
+.transaction-input-wrapper {
+  position: relative;
+  flex: 2 2 0px;
+}
+
+.transaction-input-wrapper:before {
+  content: '£';
+  display: block;
+  position: absolute;
+  left: 12px;
+  font-size: 20px;
+  z-index: 9;
+  top: 10px;
+}
+
+.transaction-input {
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  width: 100%;
+  position: relative;
+  text-indent: 28px;
+  font-size: 16px;
+  font-family: 'Oswald', sans-serif;
+  height: 38px;
+  outline: 0;
+  outline: none;
+}
+
+.transaction-input:focus {
+  border-color: #2196F3;
+}
+
+.transaction-buttons {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 0px;
+}
+
+.transaction-button {
+  flex: 1 1 0px;
+  border: none;
+  margin-left: 10px;
+  border-radius: 3px;
+  font-family: 'Oswald', sans-serif;
+  color: white;
+  letter-spacing: 1.3px;
+  font-size: 16px;
+}
+
+.transaction-button--deposit {
+  background-color: #62BF66;
+}
+
+.transaction-button--withdraw {
+  background-color: #FF5854;
 }
 
 
@@ -210,6 +277,19 @@ body {
 
 .tab {
   margin-right: 20px;
+  padding: 0 5px 5px;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: #2196F3;
+}
+
+.tab--active {
+  color: #2196F3;
+  border-bottom-color: #2196F3;
 }
 
 
@@ -227,6 +307,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.transaction-row:nth-child(odd) {
+  background-color: #f6f7f9;
 }
 
 .transaction-date {
@@ -239,4 +325,11 @@ body {
 
 .new-total {
   margin-left: 20px;
+}
+
+.empty-transactions {
+  padding: 10px;
+  background-color: #f6f7f9;
+    border-radius: 5px;
+    margin: 10px 0;
 }

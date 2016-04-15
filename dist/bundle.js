@@ -20141,9 +20141,17 @@
 
 	var _transactions2 = _interopRequireDefault(_transactions);
 
-	var _totalRow = __webpack_require__(272);
+	var _transactionControl = __webpack_require__(273);
+
+	var _transactionControl2 = _interopRequireDefault(_transactionControl);
+
+	var _totalRow = __webpack_require__(274);
 
 	var _totalRow2 = _interopRequireDefault(_totalRow);
+
+	var _tabs = __webpack_require__(275);
+
+	var _tabs2 = _interopRequireDefault(_tabs);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20177,6 +20185,16 @@
 	      totalBalance: newTotal
 	    });
 	  },
+
+
+	  // Change the transactions displayed
+	  changeTransactionDisplayType: function changeTransactionDisplayType(type) {
+	    if (type != this.state.transactionDisplayType) {
+	      this.setState({
+	        transactionDisplayType: type
+	      });
+	    }
+	  },
 	  render: function render() {
 
 	    // REMOVE AFTER TESTING FUNCTION
@@ -20207,37 +20225,10 @@
 	        ),
 	        _react2.default.createElement('i', { className: 'fa fa-pencil wallet-name-edit-button', 'aria-hidden': 'true' })
 	      ),
-	      _react2.default.createElement(_totalRow2.default, { totalBalance: this.state.totalBalance }),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'tabs' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'tab' },
-	          'All'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'tab' },
-	          'Deposits'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'tab' },
-	          'Withdrawals'
-	        )
-	      ),
+	      _react2.default.createElement(_transactionControl2.default, { addNewTransaction: this.addNewTransaction, currentTotal: this.state.totalBalance }),
+	      _react2.default.createElement(_tabs2.default, { activeTab: this.state.transactionDisplayType, changeTransactionDisplayType: this.changeTransactionDisplayType }),
 	      _react2.default.createElement(_transactions2.default, { transactions: this.state.transactions, transactionDisplayType: this.state.transactionDisplayType }),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: this.addNewTransaction.bind(this, newDepositData) },
-	        'Deposit'
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: this.addNewTransaction.bind(this, newWithdrawalData) },
-	        'Withdraw'
-	      )
+	      _react2.default.createElement(_totalRow2.default, { totalBalance: this.state.totalBalance })
 	    );
 	  }
 	});
@@ -20271,24 +20262,32 @@
 	  getTransactionRows: function getTransactionRows() {
 	    var _this = this;
 
-	    // Sort rows by date
-	    var sortedRows = _underscore2.default.sortBy(this.props.transactions, 'transactionDate');
+	    if (this.props.transactions.length === 0) {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'empty-transactions' },
+	        'You have no transactions to view'
+	      );
+	    } else {
+	      // Sort rows by date
+	      var sortedRows = _underscore2.default.sortBy(this.props.transactions, 'transactionDate');
 
-	    // Reverse the rows to get most recent first
-	    sortedRows = sortedRows.reverse();
+	      // Reverse the rows to get most recent first
+	      sortedRows = sortedRows.reverse();
 
-	    // Map the array into <TransactionRow /> components
-	    var rows = sortedRows.map(function (row) {
-	      if (_this.props.transactionDisplayType === "all" || _this.props.transactionDisplayType === row.transactionType) {
-	        return _react2.default.createElement(_transactionRow2.default, { transactionDate: row.transactionDate,
-	          transactionType: row.transactionType,
-	          transactionValue: row.transactionValue,
-	          transactionDisplayType: _this.props.transactionDisplayType,
-	          remainingBalance: row.remainingBalance,
-	          key: row.transactionDate });
-	      }
-	    });
-	    return rows;
+	      // Map the array into <TransactionRow /> components
+	      var rows = sortedRows.map(function (row) {
+	        if (_this.props.transactionDisplayType === "all" || _this.props.transactionDisplayType === row.transactionType) {
+	          return _react2.default.createElement(_transactionRow2.default, { transactionDate: row.transactionDate,
+	            transactionType: row.transactionType,
+	            transactionValue: row.transactionValue,
+	            transactionDisplayType: _this.props.transactionDisplayType,
+	            remainingBalance: row.remainingBalance,
+	            key: row.transactionDate });
+	        }
+	      });
+	      return rows;
+	    }
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -21873,7 +21872,7 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _helpers = __webpack_require__(273);
+	var _helpers = __webpack_require__(272);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -21893,11 +21892,11 @@
 	          { className: 'transaction-date' },
 	          _helpers2.default.getFormattedDate(this.props.transactionDate)
 	        ),
-	        this.props.transactionDisplayType === 'all' ? _react2.default.createElement(
+	        _react2.default.createElement(
 	          'span',
 	          { className: 'transaction-type' },
 	          this.props.transactionType
-	        ) : null
+	        )
 	      ),
 	      _react2.default.createElement(
 	        'div',
@@ -35030,11 +35029,126 @@
 	  value: true
 	});
 
+	var _moment = __webpack_require__(172);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+
+	  // Pass in value in pence. Assume default of en-GB & GBP
+
+	  getFormattedCurrency: function getFormattedCurrency(value) {
+	    var locale = arguments.length <= 1 || arguments[1] === undefined ? 'en-GB' : arguments[1];
+	    var currency = arguments.length <= 2 || arguments[2] === undefined ? 'GBP' : arguments[2];
+
+	    var formattedValue = (value / 100).toLocaleString(locale, { style: 'currency', currency: currency });
+	    return formattedValue;
+	  },
+	  getFormattedDate: function getFormattedDate(date) {
+	    var transactionDate = (0, _moment2.default)(date).format('DD/MM/YYYY');
+	    var transactionTime = (0, _moment2.default)(date).format('HH:mm');
+	    return transactionDate + ' -  ' + transactionTime;
+	  }
+	};
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _helpers = __webpack_require__(273);
+	var _helpers = __webpack_require__(272);
+
+	var _helpers2 = _interopRequireDefault(_helpers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'transactionControl',
+	  getInitialState: function getInitialState() {
+	    return {
+	      transactionValue: 0
+	    };
+	  },
+	  updateTransactionValue: function updateTransactionValue(e) {
+	    /*
+	    * Thanks to http://embed.plnkr.co/jEOWlj/ for the help!
+	    */
+	    var value = e.target.value;
+	    // remove all characters that aren't digit or dot
+	    value = value.replace(/[^0-9.]/g, '');
+	    // replace multiple dots with a single dot
+	    value = value.replace(/\.+/g, '.');
+	    // only allow 2 digits after a dot
+	    value = value.replace(/(.*\.[0-9][0-9]?).*/g, '$1');
+	    // replace multiple zeros with a single one
+	    value = value.replace(/^0+(.*)$/, '0$1');
+	    // remove leading zero
+	    value = value.replace(/^0([^.].*)$/, '$1');
+	    this.setState({
+	      transactionValue: value
+	    });
+	  },
+	  handleNewTransaction: function handleNewTransaction(type) {
+	    // Get the value entered
+	    if (type === 'withdraw' && this.props.currentTotal - this.state.transactionValue < 0) {
+	      alert("can't go negative");
+	    } else {
+	      alert("this one's ok");
+	    }
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'transaction-control' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'transaction-input-wrapper' },
+	        _react2.default.createElement('input', { type: 'text', value: this.state.transactionValue > 0 ? this.state.transactionValue : '', placeholder: 'Enter an amount', className: 'transaction-input', onChange: this.updateTransactionValue })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'transaction-buttons' },
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'transaction-button transaction-button--deposit', onClick: this.handleNewTransaction.bind(this, 'deposit') },
+	          'Deposit'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'transaction-button transaction-button--withdraw', onClick: this.handleNewTransaction.bind(this, 'withdraw') },
+	          'Withdraw'
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _helpers = __webpack_require__(272);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -35070,7 +35184,7 @@
 	});
 
 /***/ },
-/* 273 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35079,29 +35193,42 @@
 	  value: true
 	});
 
-	var _moment = __webpack_require__(172);
+	var _react = __webpack_require__(1);
 
-	var _moment2 = _interopRequireDefault(_moment);
+	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = {
-
-	  // Pass in value in pence. Assume default of en-GB & GBP
-
-	  getFormattedCurrency: function getFormattedCurrency(value) {
-	    var locale = arguments.length <= 1 || arguments[1] === undefined ? 'en-GB' : arguments[1];
-	    var currency = arguments.length <= 2 || arguments[2] === undefined ? 'GBP' : arguments[2];
-
-	    var formattedValue = (value / 100).toLocaleString(locale, { style: 'currency', currency: currency });
-	    return formattedValue;
+	var Tab = _react2.default.createClass({
+	  displayName: 'Tab',
+	  getClassName: function getClassName() {
+	    if (this.props.activeTab === this.props.transactionType) {
+	      return 'tab tab--active';
+	    } else {
+	      return 'tab';
+	    }
 	  },
-	  getFormattedDate: function getFormattedDate(date) {
-	    var transactionDate = (0, _moment2.default)(date).format('DD/MM/YYYY');
-	    var transactionTime = (0, _moment2.default)(date).format('HH:mm');
-	    return transactionDate + ' -  ' + transactionTime;
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: this.getClassName(), onClick: this.props.changeTransactionDisplayType.bind(null, this.props.transactionType) },
+	      this.props.tabName
+	    );
 	  }
-	};
+	});
+
+	exports.default = _react2.default.createClass({
+	  displayName: 'tabs',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'tabs' },
+	      _react2.default.createElement(Tab, { activeTab: this.props.activeTab, transactionType: 'all', tabName: 'All', changeTransactionDisplayType: this.props.changeTransactionDisplayType }),
+	      _react2.default.createElement(Tab, { activeTab: this.props.activeTab, transactionType: 'deposit', tabName: 'Deposits', changeTransactionDisplayType: this.props.changeTransactionDisplayType }),
+	      _react2.default.createElement(Tab, { activeTab: this.props.activeTab, transactionType: 'withdrawal', tabName: 'Withdrawals', changeTransactionDisplayType: this.props.changeTransactionDisplayType })
+	    );
+	  }
+	});
 
 /***/ }
 /******/ ]);

@@ -2,7 +2,9 @@ import React from 'react';
 
 // Components
 import Transactions from './transactions.js';
+import TransactionControl from './transactionControl.js';
 import TotalRow from './totalRow.js';
+import Tabs from './tabs.js';
 
 export default React.createClass({
 
@@ -35,6 +37,16 @@ export default React.createClass({
     });
   },
 
+
+  // Change the transactions displayed
+  changeTransactionDisplayType(type){
+    if(type != this.state.transactionDisplayType){
+      this.setState({
+        transactionDisplayType: type
+      })
+    }
+  },
+
   render(){
 
     // REMOVE AFTER TESTING FUNCTION
@@ -61,20 +73,16 @@ export default React.createClass({
           <i className="fa fa-pencil wallet-name-edit-button" aria-hidden="true"></i>
         </div>
 
-        {/*Component - <TotalRow />*/}
-        <TotalRow totalBalance={this.state.totalBalance} />
+        <TransactionControl addNewTransaction={this.addNewTransaction} currentTotal={this.state.totalBalance}/>
+
 
         {/*Component - <Tabs />*/}
-        <div className="tabs">
-          <div className="tab">All</div>
-          <div className="tab">Deposits</div>
-          <div className="tab">Withdrawals</div>
-        </div>
+        <Tabs activeTab={this.state.transactionDisplayType} changeTransactionDisplayType={this.changeTransactionDisplayType} />
 
         {/*Component - <Transactions />*/}
         <Transactions transactions={this.state.transactions} transactionDisplayType={this.state.transactionDisplayType} />
-        <button onClick={this.addNewTransaction.bind(this,newDepositData)}>Deposit</button>
-        <button onClick={this.addNewTransaction.bind(this, newWithdrawalData)}>Withdraw</button>
+        <TotalRow totalBalance={this.state.totalBalance} />
+
       </div>
     )
   }

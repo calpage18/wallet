@@ -8,26 +8,30 @@ export default React.createClass({
 
   getTransactionRows(){
 
-    // Sort rows by date
-    var sortedRows = _.sortBy(this.props.transactions, 'transactionDate');
+    if(this.props.transactions.length === 0){
+      return <div className="empty-transactions">You have no transactions to view</div>
+    } else {
+      // Sort rows by date
+      var sortedRows = _.sortBy(this.props.transactions, 'transactionDate');
 
-    // Reverse the rows to get most recent first
-    sortedRows = sortedRows.reverse();
+      // Reverse the rows to get most recent first
+      sortedRows = sortedRows.reverse();
 
-    // Map the array into <TransactionRow /> components
-    var rows = sortedRows.map(row => {
-      if(this.props.transactionDisplayType === "all" || this.props.transactionDisplayType === row.transactionType){
-        return (
-          <TransactionRow transactionDate={row.transactionDate}
-            transactionType={row.transactionType}
-            transactionValue={row.transactionValue}
-            transactionDisplayType={this.props.transactionDisplayType}
-            remainingBalance={row.remainingBalance}
-            key={row.transactionDate} />
-        )
-      }
-    });
-    return rows;
+      // Map the array into <TransactionRow /> components
+      var rows = sortedRows.map(row => {
+        if(this.props.transactionDisplayType === "all" || this.props.transactionDisplayType === row.transactionType){
+          return (
+            <TransactionRow transactionDate={row.transactionDate}
+              transactionType={row.transactionType}
+              transactionValue={row.transactionValue}
+              transactionDisplayType={this.props.transactionDisplayType}
+              remainingBalance={row.remainingBalance}
+              key={row.transactionDate} />
+          )
+        }
+      });
+      return rows;
+    }
   },
 
   render(){
