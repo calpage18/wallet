@@ -20150,7 +20150,12 @@
 	      _react2.default.createElement(
 	        "div",
 	        { className: "wallet-name" },
-	        "My wallet"
+	        _react2.default.createElement(
+	          "div",
+	          { className: "wallet-name-label" },
+	          "My wallet"
+	        ),
+	        _react2.default.createElement("i", { className: "fa fa-pencil wallet-name-edit-button", "aria-hidden": "true" })
 	      ),
 	      _react2.default.createElement(
 	        "div",
