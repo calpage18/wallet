@@ -179,6 +179,48 @@ body {
   color: #43a047;
 }
 
+/*Display as grey when balance is zero*/
 .total-value--zero {
   color: #999999;
+}
+
+
+/*****************
+****** TABS ******
+*****************/
+
+.tabs {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin-top: 15px;
+}
+
+.tab {
+  margin-right: 20px;
+}
+
+
+/*************************
+****** TRANSACTIONS ******
+*************************/
+
+.transactions {
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction-row {
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.transaction-date {
+  margin-right: 20px;
+}
+
+.new-total {
+  margin-left: 20px;
 }

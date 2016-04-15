@@ -20170,6 +20170,61 @@
 	          { className: "total-value" },
 	          "£349.28"
 	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "tabs" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "tab" },
+	          "All"
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "tab" },
+	          "Deposits"
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "tab" },
+	          "Withdrawals"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "transactions" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "transaction-row" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "transaction-info" },
+	            _react2.default.createElement(
+	              "span",
+	              { className: "transaction-date" },
+	              "3rd April 2016"
+	            ),
+	            _react2.default.createElement(
+	              "span",
+	              { className: "transaction-type" },
+	              "Deposit"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "transaction-details" },
+	            _react2.default.createElement(
+	              "span",
+	              { className: "transaction-amount" },
+	              "£320"
+	            ),
+	            _react2.default.createElement(
+	              "span",
+	              { className: "new-total" },
+	              "£349.28"
+	            )
+	          )
+	        )
 	      )
 	    );
 	  }
