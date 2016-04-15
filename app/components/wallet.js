@@ -1,8 +1,29 @@
 import React from 'react';
 
 // Components
+import Transactions from './transactions.js';
 
 export default React.createClass({
+
+  getInitialState(){
+    return({
+      transactions: [
+        {
+          transactionDate: 1460701451271,
+          transactionType: 'deposit',
+          transactionValue: 32045,
+          remainingBalance: 32045,
+        },
+        {
+          transactionDate: 1460700584456,
+          transactionType: 'withdrawal',
+          transactionValue: 345,
+          remainingBalance: 32485,
+        }
+      ],
+      transactionDisplayType: 'all'
+    })
+  },
 
   render(){
     return(
@@ -28,20 +49,7 @@ export default React.createClass({
         </div>
 
         {/*Component - <Transactions />*/}
-        <div className="transactions">
-
-          {/*Component - <TransactionRow />*/}
-          <div className="transaction-row">
-            <div className="transaction-info">
-              <span className="transaction-date">3rd April 2016</span>
-              <span className="transaction-type">Deposit</span>
-            </div>
-            <div className="transaction-details">
-              <span className="transaction-amount">£320</span>
-              <span className="new-total">£349.28</span>
-            </div>
-          </div>
-        </div>
+        <Transactions transactions={this.state.transactions} transactionDisplayType={this.state.transactionDisplayType} />
       </div>
     )
   }
