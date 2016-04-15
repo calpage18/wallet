@@ -33,21 +33,31 @@ export default React.createClass({
   handleNewTransaction(type){
     // Get the value entered
     if(type === 'withdraw' && this.props.currentTotal - (this.state.transactionValue) < 0) {
-      alert("can't go negative");
+      alert("Sorry, you can't have a negative balance");
     } else {
-      alert("this one's ok");
+
+      var transactionData = {
+        transactionValue: this.state.transactionValue * 100,
+        transactionType: type
+      };
+      this.props.addNewTransaction(transactionData);
     }
+
+    // Reset input to 0 for the next transaction
+    this.setState({
+      transactionValue: 0
+    })
   },
 
   render(){
     return(
       <div className="transaction-control">
         <div className="transaction-input-wrapper">
-          <input type="text" value={this.state.transactionValue > 0 ? this.state.transactionValue : ''} placeholder="Enter an amount" className="transaction-input" onChange={this.updateTransactionValue} />
+          <input type="text" value={this.state.transactionValue > 0 ? this.state.transactionValue : ''} id="transaction-input" placeholder="Enter an amount" className="transaction-input" onChange={this.updateTransactionValue} />
         </div>
         <div className="transaction-buttons">
-          <button className="transaction-button transaction-button--deposit" onClick={this.handleNewTransaction.bind(this,'deposit')}>Deposit</button>
-          <button className="transaction-button transaction-button--withdraw" onClick={this.handleNewTransaction.bind(this,'withdraw')}>Withdraw</button>
+          <button className="transaction-button transaction-button--deposit" disabled={this.state.transactionValue === 0} onClick={this.handleNewTransaction.bind(this,'deposit')}>Deposit</button>
+          <button className="transaction-button transaction-button--withdraw" disabled={this.state.transactionValue === 0} onClick={this.handleNewTransaction.bind(this,'withdraw')}>Withdraw</button>
         </div>
       </div>
     )

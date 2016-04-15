@@ -19,12 +19,15 @@ export default React.createClass({
   addNewTransaction(transactionData){
 
     // Adjust the total balance as required
-    var newTotal;
+    var newTotal = 0;
     if(transactionData.transactionType === 'deposit'){
       newTotal = this.state.totalBalance + transactionData.transactionValue;
     } else{
       newTotal = this.state.totalBalance - transactionData.transactionValue;
     }
+
+    // Add this new total to the transactionData object
+    transactionData.remainingBalance = newTotal;
 
     // Initialise newTransactionsList to existing transactions array so we can push on the new transaction
     var newTransactionsList = this.state.transactions;
@@ -35,10 +38,16 @@ export default React.createClass({
       transactions: newTransactionsList,
       totalBalance: newTotal
     });
+
+    // Save this data to localStorage. Using these properties instead of state because setState might not have finished executing
+    window.localStorage.setItem('wallet-state', JSON.stringify({
+      transactions: newTransactionsList,
+      totalBalance: newTotal
+    }));
   },
 
 
-  // Change the transactions displayed
+  // Change the transactions displayed when clicking on a tab
   changeTransactionDisplayType(type){
     if(type != this.state.transactionDisplayType){
       this.setState({
@@ -47,39 +56,22 @@ export default React.createClass({
     }
   },
 
+
+  // Check if wallet data exists in localStorage and load it if it does.
+  componentWillMount(){
+    if(window.localStorage.getItem('wallet-state')){
+      var dataFromLocalStorage = JSON.parse(window.localStorage.getItem('wallet-state'));
+      this.setState(dataFromLocalStorage);
+    }
+  },
+
   render(){
-
-    // REMOVE AFTER TESTING FUNCTION
-    var newDepositData = {
-      transactionDate: Date.now(),
-      transactionType: 'deposit',
-      transactionValue: 32045,
-      remainingBalance: this.state.totalBalance + 32045
-    };
-
-    var newWithdrawalData = {
-      transactionDate: Date.now(),
-      transactionType: 'withdrawal',
-      transactionValue: 21045,
-      remainingBalance: this.state.totalBalance - 21045
-    };
 
     return(
       <div className="wallet-wrapper">
 
-        {/*Component - <WalletName />*/}
-        <div className="wallet-name">
-          <div className="wallet-name-label">My wallet</div>
-          <i className="fa fa-pencil wallet-name-edit-button" aria-hidden="true"></i>
-        </div>
-
         <TransactionControl addNewTransaction={this.addNewTransaction} currentTotal={this.state.totalBalance}/>
-
-
-        {/*Component - <Tabs />*/}
         <Tabs activeTab={this.state.transactionDisplayType} changeTransactionDisplayType={this.changeTransactionDisplayType} />
-
-        {/*Component - <Transactions />*/}
         <Transactions transactions={this.state.transactions} transactionDisplayType={this.state.transactionDisplayType} />
         <TotalRow totalBalance={this.state.totalBalance} />
 

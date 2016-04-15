@@ -13,18 +13,18 @@ export default React.createClass({
           <ul className="nav-list">
             <li className="nav-list-item">Home</li>
             <li className="nav-list-item">Reset</li>
-            <li className="nav-list-item">View Source</li>
+            <li className="nav-list-item"><a class="nav-link" href="https://github.com/calumspage/wallet">View Source</a></li>
           </ul>
         </nav>
 
         {/* On resize, display this one at mobile*/}
-        {/*<nav className="nav">
+        <nav className="nav-small">
           <ul className="nav-list">
             <li className="nav-list-item"><i className="fa fa-home" aria-hidden="true"></i></li>
             <li className="nav-list-item"><i className="fa fa-refresh" aria-hidden="true"></i></li>
             <li className="nav-list-item"><i className="fa fa-github" aria-hidden="true"></i></li>
           </ul>
-        </nav>*/}
+        </nav>
       </header>
     )
   }

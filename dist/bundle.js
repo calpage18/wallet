@@ -20115,7 +20115,34 @@
 	          _react2.default.createElement(
 	            "li",
 	            { className: "nav-list-item" },
-	            "View Source"
+	            _react2.default.createElement(
+	              "a",
+	              { "class": "nav-link", href: "https://github.com/calumspage/wallet" },
+	              "View Source"
+	            )
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "nav",
+	        { className: "nav-small" },
+	        _react2.default.createElement(
+	          "ul",
+	          { className: "nav-list" },
+	          _react2.default.createElement(
+	            "li",
+	            { className: "nav-list-item" },
+	            _react2.default.createElement("i", { className: "fa fa-home", "aria-hidden": "true" })
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            { className: "nav-list-item" },
+	            _react2.default.createElement("i", { className: "fa fa-refresh", "aria-hidden": "true" })
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            { className: "nav-list-item" },
+	            _react2.default.createElement("i", { className: "fa fa-github", "aria-hidden": "true" })
 	          )
 	        )
 	      )
@@ -20168,12 +20195,15 @@
 	  addNewTransaction: function addNewTransaction(transactionData) {
 
 	    // Adjust the total balance as required
-	    var newTotal;
+	    var newTotal = 0;
 	    if (transactionData.transactionType === 'deposit') {
 	      newTotal = this.state.totalBalance + transactionData.transactionValue;
 	    } else {
 	      newTotal = this.state.totalBalance - transactionData.transactionValue;
 	    }
+
+	    // Add this new total to the transactionData object
+	    transactionData.remainingBalance = newTotal;
 
 	    // Initialise newTransactionsList to existing transactions array so we can push on the new transaction
 	    var newTransactionsList = this.state.transactions;
@@ -20184,10 +20214,16 @@
 	      transactions: newTransactionsList,
 	      totalBalance: newTotal
 	    });
+
+	    // Save this data to localStorage. Using these properties instead of state because setState might not have finished executing
+	    window.localStorage.setItem('wallet-state', JSON.stringify({
+	      transactions: newTransactionsList,
+	      totalBalance: newTotal
+	    }));
 	  },
 
 
-	  // Change the transactions displayed
+	  // Change the transactions displayed when clicking on a tab
 	  changeTransactionDisplayType: function changeTransactionDisplayType(type) {
 	    if (type != this.state.transactionDisplayType) {
 	      this.setState({
@@ -20195,36 +20231,20 @@
 	      });
 	    }
 	  },
+
+
+	  // Check if wallet data exists in localStorage and load it if it does.
+	  componentWillMount: function componentWillMount() {
+	    if (window.localStorage.getItem('wallet-state')) {
+	      var dataFromLocalStorage = JSON.parse(window.localStorage.getItem('wallet-state'));
+	      this.setState(dataFromLocalStorage);
+	    }
+	  },
 	  render: function render() {
-
-	    // REMOVE AFTER TESTING FUNCTION
-	    var newDepositData = {
-	      transactionDate: Date.now(),
-	      transactionType: 'deposit',
-	      transactionValue: 32045,
-	      remainingBalance: this.state.totalBalance + 32045
-	    };
-
-	    var newWithdrawalData = {
-	      transactionDate: Date.now(),
-	      transactionType: 'withdrawal',
-	      transactionValue: 21045,
-	      remainingBalance: this.state.totalBalance - 21045
-	    };
 
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'wallet-wrapper' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'wallet-name' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'wallet-name-label' },
-	          'My wallet'
-	        ),
-	        _react2.default.createElement('i', { className: 'fa fa-pencil wallet-name-edit-button', 'aria-hidden': 'true' })
-	      ),
 	      _react2.default.createElement(_transactionControl2.default, { addNewTransaction: this.addNewTransaction, currentTotal: this.state.totalBalance }),
 	      _react2.default.createElement(_tabs2.default, { activeTab: this.state.transactionDisplayType, changeTransactionDisplayType: this.changeTransactionDisplayType }),
 	      _react2.default.createElement(_transactions2.default, { transactions: this.state.transactions, transactionDisplayType: this.state.transactionDisplayType }),
@@ -20266,9 +20286,10 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'empty-transactions' },
-	        'You have no transactions to view'
+	        'You don\'t have any transactions yet'
 	      );
 	    } else {
+
 	      // Sort rows by date
 	      var sortedRows = _underscore2.default.sortBy(this.props.transactions, 'transactionDate');
 
@@ -20282,8 +20303,7 @@
 	            transactionType: row.transactionType,
 	            transactionValue: row.transactionValue,
 	            transactionDisplayType: _this.props.transactionDisplayType,
-	            remainingBalance: row.remainingBalance,
-	            key: row.transactionDate });
+	            remainingBalance: row.remainingBalance });
 	        }
 	      });
 	      return rows;
@@ -35102,10 +35122,20 @@
 	  handleNewTransaction: function handleNewTransaction(type) {
 	    // Get the value entered
 	    if (type === 'withdraw' && this.props.currentTotal - this.state.transactionValue < 0) {
-	      alert("can't go negative");
+	      alert("Sorry, you can't have a negative balance");
 	    } else {
-	      alert("this one's ok");
+
+	      var transactionData = {
+	        transactionValue: this.state.transactionValue * 100,
+	        transactionType: type
+	      };
+	      this.props.addNewTransaction(transactionData);
 	    }
+
+	    // Reset input to 0 for the next transaction
+	    this.setState({
+	      transactionValue: 0
+	    });
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -35114,19 +35144,19 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'transaction-input-wrapper' },
-	        _react2.default.createElement('input', { type: 'text', value: this.state.transactionValue > 0 ? this.state.transactionValue : '', placeholder: 'Enter an amount', className: 'transaction-input', onChange: this.updateTransactionValue })
+	        _react2.default.createElement('input', { type: 'text', value: this.state.transactionValue > 0 ? this.state.transactionValue : '', id: 'transaction-input', placeholder: 'Enter an amount', className: 'transaction-input', onChange: this.updateTransactionValue })
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'transaction-buttons' },
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'transaction-button transaction-button--deposit', onClick: this.handleNewTransaction.bind(this, 'deposit') },
+	          { className: 'transaction-button transaction-button--deposit', disabled: this.state.transactionValue === 0, onClick: this.handleNewTransaction.bind(this, 'deposit') },
 	          'Deposit'
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'transaction-button transaction-button--withdraw', onClick: this.handleNewTransaction.bind(this, 'withdraw') },
+	          { className: 'transaction-button transaction-button--withdraw', disabled: this.state.transactionValue === 0, onClick: this.handleNewTransaction.bind(this, 'withdraw') },
 	          'Withdraw'
 	        )
 	      )

@@ -9,8 +9,9 @@ export default React.createClass({
   getTransactionRows(){
 
     if(this.props.transactions.length === 0){
-      return <div className="empty-transactions">You have no transactions to view</div>
+      return <div className="empty-transactions">You don't have any transactions yet</div>
     } else {
+
       // Sort rows by date
       var sortedRows = _.sortBy(this.props.transactions, 'transactionDate');
 
@@ -25,8 +26,7 @@ export default React.createClass({
               transactionType={row.transactionType}
               transactionValue={row.transactionValue}
               transactionDisplayType={this.props.transactionDisplayType}
-              remainingBalance={row.remainingBalance}
-              key={row.transactionDate} />
+              remainingBalance={row.remainingBalance} />
           )
         }
       });
