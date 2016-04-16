@@ -74,7 +74,6 @@ export default React.createClass({
     })
   },
 
-
   // Check if wallet data exists in localStorage and load it if it does.
   componentWillMount(){
     if(window.localStorage.getItem('wallet-state')){
@@ -84,9 +83,7 @@ export default React.createClass({
   },
 
   render(){
-
     return(
-
       <div>
         <Nav resetWallet={this.resetWallet} goHome={this.goHome}/>
         <div className="main">
@@ -100,7 +97,6 @@ export default React.createClass({
           </div>
         </div>
       </div>
-
     )
   }
 });

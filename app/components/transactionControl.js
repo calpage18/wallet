@@ -11,28 +11,33 @@ export default React.createClass({
   },
 
   updateTransactionValue(e){
-    /*
-    * Thanks to http://embed.plnkr.co/jEOWlj/ for the help!
-    */
+
     var value = e.target.value;
-    // remove all characters that aren't digit or dot
-    value = value.replace(/[^0-9.]/g,'');
-    // replace multiple dots with a single dot
-    value = value.replace(/\.+/g,'.');
-    // only allow 2 digits after a dot
-    value = value.replace(/(.*\.[0-9][0-9]?).*/g,'$1');
-    // replace multiple zeros with a single one
-    value = value.replace(/^0+(.*)$/,'0$1');
-    // remove leading zero
-    value = value.replace(/^0([^.].*)$/,'$1');
-    this.setState({
-      transactionValue: value
-    })
+
+    // Test for only ints (just pound value) or floats (pound & pence)
+    var floatRegex = /(\d)+(\.\d{2})?/;
+    if(floatRegex.test(value)){
+      /*
+      * Thanks to http://embed.plnkr.co/jEOWlj/ for the help!
+      */
+
+      // remove all characters that aren't digit or dot
+      value = value.replace(/[^0-9.]/g,'');
+      // replace multiple dots with a single dot
+      value = value.replace(/\.+/g,'.');
+      // only allow 2 digits after a dot
+      value = value.replace(/(.*\.[0-9][0-9]?).*/g,'$1');
+      // replace multiple zeros with a single one
+      value = value.replace(/^0+(.*)$/,'0$1');
+      // remove leading zero
+      value = value.replace(/^0([^.].*)$/,'$1');
+      this.setState({
+        transactionValue: value
+      })
+    }
   },
 
   handleNewTransaction(type){
-    // Get the value entered
-
     if(type === 'withdrawal' && this.props.currentTotal - (this.state.transactionValue * 100) < 0) {
       alert("Sorry, you can't have a negative balance");
     } else {
