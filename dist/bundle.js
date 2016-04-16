@@ -35113,7 +35113,6 @@
 	      /*
 	      * Thanks to http://embed.plnkr.co/jEOWlj/ for the help!
 	      */
-
 	      // remove all characters that aren't digit or dot
 	      value = value.replace(/[^0-9.]/g, '');
 	      // replace multiple dots with a single dot
